@@ -11,8 +11,13 @@ router.get('/',(req, res, next)=>{
 
 // Handle Post Request for Ordered Products
 router.post('/',(req, res, next)=>{
+    const Order = {
+        productId : req.body.productId,
+        quantity: req.body.quantity
+    }
     res.status(200).json({
-        message:'Post operation of Order!'
+        message:'Post operation of Order!',
+        order: Order
     })
 });
 
