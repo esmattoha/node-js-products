@@ -15,7 +15,7 @@ router.post('/',(req, res, next)=>{
         productId : req.body.productId,
         quantity: req.body.quantity
     }
-    res.status(200).json({
+    res.status(201).json({
         message:'Post operation of Order!',
         order: Order
     })
