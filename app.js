@@ -8,7 +8,11 @@ const OrdersApi = require('./api/routers/orders');
 
 const app = express();
 
-mongoose.connect('mongodb://127.0.0.1:27017/Shoping');
+mongoose.connect('mongodb://127.0.0.1:27017/Shoping', { 
+    useNewUrlParser: true, 
+    useCreateIndex: true, 
+    useUnifiedTopology: true
+});
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
