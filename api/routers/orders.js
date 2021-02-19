@@ -9,18 +9,21 @@ const router = express.Router();
 // Handle Get Request for Ordered Products
 router.get('/', (req, res, next) => {
     Order.find()
+    .select('productId quantity _id ')
+    .populate('productId', 'name')
         .exec()
         .then(docs => {
             res.status(200).json({
                 message: 'All Orders are here!',
-                orders: docs.map(doc => {
+                orders: docs
+                .map(doc => {
                     return {
                         _id: doc._id,
-                        product: doc.product,
+                        product: doc.productId,
                         quantity: doc.quantity,
                         request: {
                             type: "GET",
-                            url: "http://localhost:3000/orders" + doc._id
+                            url: "http://localhost:3000/orders/" + doc._id
                         }
                     }
                 })
@@ -61,7 +64,7 @@ router.post('/', (req, res, next) => {
                         order: {
                             request: {
                                 type: "GET",
-                                url: "http://localhost:3000/orders" + result._id
+                                url: "http://localhost:3000/orders/" + result._id
                             }
                         }
                     })
@@ -80,6 +83,8 @@ router.post('/', (req, res, next) => {
 router.get('/:orderId', (req, res, next) => {
     const orderId = req.params.orderId;
     Order.findById({ _id: orderId })
+        .select("productId quantity _id")
+        .populate('productId')
         .exec()
         .then(doc => {
             res.status(200).json({
@@ -87,7 +92,7 @@ router.get('/:orderId', (req, res, next) => {
                 order: doc,
                 request:{
                     type:"GET",
-                    url:"http://localhost:3000/orders" + doc._id
+                    url:"http://localhost:3000/orders/" + doc._id
                 }
             })
         })
