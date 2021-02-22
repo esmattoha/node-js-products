@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 
 const ProductsApi = require('./api/routers/products');
 const OrdersApi = require('./api/routers/orders');
+const UserApi = require('./api/routers/user');
 
 const app = express();
 
@@ -32,6 +33,7 @@ app.use((req, res, next)=>{
 // Routes which handle request 
 app.use('/products', ProductsApi);
 app.use('/orders', OrdersApi);
+app.use('/user', UserApi);
 
 app.use((req, res, next)=>{
     const error = new Error('Not Found');
